@@ -73,7 +73,7 @@ public class APITest {
 
 	}
 
-	private static String getJson()  {
+	static String getJson()  {
 		try {
 
 	            URL url = new URL("https://data-api.defipulse.com/api/v1/defipulse/api/GetRates?token=USDC&amount=10000&api-key=2cb1015919c4e9203c15cd52627cdd6d7ca53e5500593b13e42638002384");//your url i.e fetch data from .
@@ -120,19 +120,23 @@ public class APITest {
 			return null;
 	}
 	
+	static double findRate() throws Exception {
+		return findRateForUnitTest(getJson());
+	}
+	
 	/**
 	 * 1. call the defi pulse api
 	 * 2. process the return
 	 * @param token
 	 * @return
 	 */
-	static double findRate() throws Exception{
+	static double findRateForUnitTest(String json) throws Exception{
 		
 		double rate = 0;
 		double rateCount = 0;
 		 // parsing file "JSONExample.json" 
 		
-        Object obj = new JSONParser().parse(getJson()); 
+        Object obj = new JSONParser().parse(json); 
 //	        JSONObject a = new JSONObject("saa");
         
           
@@ -165,7 +169,7 @@ public class APITest {
         } 
 	
         
-        double avgRate = (double)(rate / rateCount);
+        double avgRate = (double)(rate / rateCount)/100;
         if (avgRate > .06)
         	return .06;
         else
